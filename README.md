@@ -9,7 +9,7 @@ A modern, responsive career platform dashboard for Chandigarh University student
 - 📱 Fully responsive design
 
 ## Live Demo
-[View Dashboard](https://yourusername.github.io/cu-career-dashboard)
+[View Dashboard](https://ChinmayJain-JC/cu-career-dashboard)
 
 ## Technologies Used
 - HTML5

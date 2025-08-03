@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report - Chandigarh University</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Universal Scale Synchronization */
+        :root {
+            --container-max-width: 1200px;
+            --sidebar-width: 250px;
+            --main-padding: 20px 30px;
+            --card-padding: 15px;
+            --card-radius: 12px;
+            --grid-gap: 15px;
+            --section-gap: 20px;
+        }
+
+        /* Smooth page transition to fix zoom out effect */
+        @view-transition {
+            navigation: auto;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        /* Synchronized Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e0e6ed;
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .logo-icon {
+            background: #ff6b35;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logo-subtext {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            background: #fff5f2;
+            color: #ff6b35;
+            font-weight: 500;
+        }
+
+        /* FIXED: Added position relative for notification nav item */
+        .nav-item.notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Back to Dashboard Button */
+        .back-to-dashboard {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6b35;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-dashboard:hover {
+            background: #e55a2b;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content - Synchronized */
+        .main-content {
+            flex: 1;
+            padding: var(--main-padding);
+        }
+
+        .page-header {
+            margin-bottom: var(--section-gap);
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* Synchronized Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--grid-gap);
+            margin: 22px 0;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            text-align: center;
+            border-top: 3px solid #ff6b35;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            min-height: 120px;
+        }
+
+        .card-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff6b35;
+            margin-bottom: 5px;
+        }
+
+        .card-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+        }
+
+        /* Synchronized Circle Progress */
+        .circle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--grid-gap);
+            margin-bottom: 28px;
+        }
+
+        .circle-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            min-height: 160px;
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 12px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+            width: 90px;
+            height: 90px;
+        }
+
+        .circular-progress .bg-circle {
+            stroke: #e5e7eb;
+            stroke-width: 5;
+            fill: none;
+        }
+
+        .circular-progress .progress-circle {
+            stroke: #ff6b35;
+            stroke-width: 5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-dasharray: 240;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+
+        /* FIXED: Proper center text positioning */
+        .circular-progress .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .circle-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Synchronized Funnel Section */
+        .funnel-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .funnel-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .funnel-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 90px 60px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .funnel-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .funnel-track {
+            height: 14px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .funnel-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b35, #ff8f65);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .funnel-percent {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ff6b35;
+            text-align: right;
+        }
+
+        .funnel-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: #6b7280;
+            text-align: right;
+        }
+
+        /* Synchronized Insights & Actions */
+        .insights-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--section-gap);
+        }
+
+        .insights-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .insight-item i {
+            color: #ff6b35;
+            font-size: 12px;
+            min-width: 14px;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .action-item {
+            background: rgba(255, 107, 53, 0.12);
+            border-left: 3px solid #ff6b35;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .action-item strong {
+            color: #1f2937;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .insights-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .funnel-row {
+                grid-template-columns: 110px 1fr 60px 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back to Dashboard Button -->
+        <a href="#" onclick="navigateWithFade('index.html')" class="back-to-dashboard">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">CU</div>
+                <div>
+                    <div class="logo-text">Chandigarh University</div>
+                    <div class="logo-subtext">Career Platform</div>
+                </div>
+            </div>
+            <nav>
+                <a class="nav-item" href="#" onclick="navigateWithFade('index.html')"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                <a class="nav-item" href="#" onclick="navigateWithFade('career.html')"><i class="fas fa-briefcase"></i>Career</a>
+                <a class="nav-item active" href="student-report.html"><i class="fas fa-chart-bar"></i>Student Report</a>
+                <a class="nav-item" href="#"><i class="fas fa-file-alt"></i>Resume</a>
+                <a class="nav-item" href="#"><i class="fas fa-paper-plane"></i>Applications</a>
+                <a class="nav-item notifications" href="#"><i class="fas fa-bell"></i>Notifications
+                    <div class="notification-badge">5</div>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <h1 class="page-title">Student Report Dashboard</h1>
+                <p class="page-subtitle">Comprehensive analysis of your placement journey</p>
+            </header>
+
+            <!-- Stats -->
+            <section class="overview-grid">
+                <div class="overview-card"><div class="card-number">100</div><div class="card-label">Companies Applied</div></div>
+                <div class="overview-card"><div class="card-number">40</div><div class="card-label">Aptitude Cleared</div></div>
+                <div class="overview-card"><div class="card-number">5</div><div class="card-label">Final Rounds</div></div>
+                <div class="overview-card"><div class="card-number">5%</div><div class="card-label">Success Rate</div></div>
+            </section>
+
+            <!-- FIXED: Circles with proper SVG coordinates and accurate progress -->
+            <section class="circle-grid">
+                <div class="circle-card">
+                    <div class="circular-progress">
+                        <svg viewBox="0 0 90 90">
+                            <circle cx="45" cy="45" r="38" class="bg-circle"></circle>
+                            <circle cx="45" cy="45" r="38" class="progress-circle" stroke-dashoffset="112"></circle>
+                        </svg>
+                        <div class="center-text">40</div>
+                    </div>
+                    <div class="circle-label">Aptitude Cleared (40/75)</div>
+                </div>
+
+                <div class="circle-card">
+                    <div class="circular-progress">
+                        <svg viewBox="0 0 90 90">
+                            <circle cx="45" cy="45" r="38" class="bg-circle"></circle>
+                            <circle cx="45" cy="45" r="38" class="progress-circle" stroke-dashoffset="150"></circle>
+                        </svg>
+                        <div class="center-text">15</div>
+                    </div>
+                    <div class="circle-label">Technical Cleared (15/40)</div>
+                </div>
+            </section>
+
+            <!-- Funnel -->
+            <section class="funnel-section">
+                <h2 class="section-title"><i class="fas fa-filter"></i>Application Conversion Funnel</h2>
+
+                <div class="funnel-bars">
+                    <div class="funnel-row">
+                        <div class="funnel-label">Applications</div>
+                        <div class="funnel-track"><div class="funnel-fill" style="width:100%"></div></div>
+                        <div class="funnel-percent">100%</div>
+                        <div class="funnel-count">100/100</div>
+                    </div>
+
+                    <div class="funnel-row">
+                        <div class="funnel-label">Shortlisted</div>
+                        <div class="funnel-track"><div class="funnel-fill" style="width:75%"></div></div>
+                        <div class="funnel-percent">75%</div>
+                        <div class="funnel-count">75/100</div>
+                    </div>
+
+                    <div class="funnel-row">
+                        <div class="funnel-label">Aptitude Cleared</div>
+                        <div class="funnel-track"><div class="funnel-fill" style="width:53%"></div></div>
+                        <div class="funnel-percent">53%</div>
+                        <div class="funnel-count">40/75</div>
+                    </div>
+
+                    <div class="funnel-row">
+                        <div class="funnel-label">Technical Cleared</div>
+                        <div class="funnel-track"><div class="funnel-fill" style="width:37%"></div></div>
+                        <div class="funnel-percent">37%</div>
+                        <div class="funnel-count">15/40</div>
+                    </div>
+
+                    <div class="funnel-row">
+                        <div class="funnel-label">Final Cleared</div>
+                        <div class="funnel-track"><div class="funnel-fill" style="width:33%"></div></div>
+                        <div class="funnel-percent">33%</div>
+                        <div class="funnel-count">5/15</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Insights & Actions -->
+            <section class="insights-actions">
+                <!-- Insights -->
+                <div class="insights-card">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i>Key Insights</h3>
+                    <div class="insight-item"><i class="fas fa-exclamation-triangle"></i>Technical rounds have a 62% failure rate</div>
+                    <div class="insight-item"><i class="fas fa-trophy"></i>Group Discussions boast 100% success</div>
+                    <div class="insight-item"><i class="fas fa-chart-line"></i>Aptitude clearance (53%) above average</div>
+                </div>
+
+                <!-- Actions -->
+                <div class="insights-card">
+                    <h3 class="section-title"><i class="fas fa-rocket"></i>Action Items</h3>
+                    <div class="insight-item action-item"><i class="fas fa-code"></i><strong>Technical Skills:</strong>&nbsp;Daily DSA practice</div>
+                    <div class="insight-item action-item"><i class="fas fa-comments"></i><strong>Interview Prep:</strong>&nbsp;Mock interviews</div>
+                    <div class="insight-item action-item"><i class="fas fa-users"></i><strong>Leverage GD:</strong>&nbsp;Keep up GD strength</div>
+                    <div class="insight-item action-item"><i class="fas fa-bullseye"></i><strong>Target Apps:</strong>&nbsp;More tech-heavy firms</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Smooth page fade-in effect on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loaded class for fade in
+            document.body.classList.add('loaded');
+            
+            // Animate funnel bars
+            document.querySelectorAll('.funnel-fill').forEach((el, i) => {
+                const w = el.style.width;
+                el.style.width = '0%';
+                setTimeout(() => el.style.width = w, 200 + i * 80);
+            });
+            
+            // FIXED: Animate circular progress with correct values
+            document.querySelectorAll('.progress-circle').forEach((c, i) => {
+                // Start from full circle (240 = no progress)
+                c.style.strokeDashoffset = '240';
+                
+                setTimeout(() => {
+                    if (i === 0) {
+                        // Aptitude: 40/75 = 53.3% progress
+                        c.style.strokeDashoffset = '112';
+                    } else {
+                        // Technical: 15/40 = 37.5% progress  
+                        c.style.strokeDashoffset = '150';
+                    }
+                }, 400 + i * 200);
+            });
+        });
+
+        // Smooth navigation function
+        function navigateWithFade(href) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+    </script>
+</body>
+</html>

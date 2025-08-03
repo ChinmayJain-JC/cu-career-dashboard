@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - Chandigarh University</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Universal Scale Synchronization */
+        :root {
+            --container-max-width: 1200px;
+            --sidebar-width: 250px;
+            --main-padding: 20px 30px;
+            --card-padding: 20px;
+            --card-radius: 12px;
+            --grid-gap: 15px;
+            --section-gap: 20px;
+        }
+
+        /* Smooth page transition */
+        @view-transition {
+            navigation: auto;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        /* Synchronized Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e0e6ed;
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .logo-icon {
+            background: #ff6b35;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            background: #fff5f2;
+            color: #ff6b35;
+            font-weight: 500;
+        }
+
+        .nav-item.notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .quick-actions h4 {
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-item i {
+            width: 16px;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .action-item:hover {
+            background: #f8fafc;
+            color: #ff6b35;
+            padding-left: 8px;
+        }
+
+        /* Back Button */
+        .back-to-careers {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-careers:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--main-padding);
+        }
+
+        /* Application Progress Infographic */
+        .application-progress {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #10b981;
+        }
+
+        .progress-container {
+            margin-top: 25px;
+            position: relative;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 20px 0;
+            padding: 0 15px;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 22px;
+            left: 15px;
+            right: 15px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .progress-line-active {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 2px;
+            width: 50%;
+            transition: width 1s ease-in-out;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .step.completed .step-circle {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .step.current .step-circle {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            animation: currentPulse 2s infinite;
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes currentPulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .step.completed .step-label {
+            color: #10b981;
+        }
+
+        .step.current .step-label {
+            color: #3b82f6;
+            font-weight: 700;
+        }
+
+        .step-status {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .step.current .step-status {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Job Header */
+        .job-header {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #ff6b35;
+        }
+
+        .job-title-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .job-title-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .company-logo-large {
+            width: 60px;
+            height: 60px;
+            background: #ff6b35;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .job-title-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .company-name-large {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .apply-now-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .apply-now-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Job Content */
+        .job-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .job-details-main {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .job-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-description-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 30px;
+        }
+
+        .requirements-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .requirements-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #4b5563;
+        }
+
+        .requirements-list li i {
+            color: #10b981;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #4b5563;
+        }
+
+        .benefits-list li i {
+            color: #ff6b35;
+            font-size: 14px;
+        }
+
+        /* Job Info Cards */
+        .job-info-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .salary-highlight {
+            color: #10b981;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .company-info {
+            text-align: center;
+        }
+
+        .company-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .company-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .company-stat {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 6px;
+        }
+
+        .company-stat-number {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+
+        .company-stat-label {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Resume Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: auto;
+            padding: 30px;
+            border: none;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .modal-header i {
+            font-size: 24px;
+            color: #10b981;
+        }
+
+        .close {
+            color: #9ca3af;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #374151;
+        }
+
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .upload-area.dragover {
+            border-color: #10b981;
+            background: #ecfdf5;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        #resumeInput {
+            display: none;
+        }
+
+        .file-info {
+            display: none;
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-submit {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #059669;
+        }
+
+        .btn-submit:disabled {
+            background: #d1d5db;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .job-content {
+                grid-template-columns: 1fr;
+            }
+
+            .job-title-section {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .job-title-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .progress-steps {
+                padding: 0 5px;
+            }
+
+            .step-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .step-label {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back to Careers Button -->
+        <a href="#" onclick="navigateWithFade('career.html')" class="back-to-careers">
+            <i class="fas fa-arrow-left"></i> Back to Careers
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">CU</div>
+                <div>
+                    <div style="font-weight: 600;">Chandigarh University</div>
+                    <div style="font-size: 12px; color: #6b7280;">Career Platform</div>
+                </div>
+            </div>
+            
+            <nav>
+                <a href="#" onclick="navigateWithFade('index.html')" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#" onclick="navigateWithFade('career.html')" class="nav-item active">
+                    <i class="fas fa-briefcase"></i>
+                    Career
+                </a>
+                <a href="#" onclick="navigateWithFade('student-report.html')" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Student Report
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    Resume
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-paper-plane"></i>
+                    Applications
+                </a>
+                <a href="#" class="nav-item notifications">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                    <div class="notification-badge">5</div>
+                </a>
+            </nav>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h4>Quick Actions</h4>
+                <a href="#" class="action-item">
+                    <i class="fas fa-upload"></i>
+                    Upload Resume
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-search"></i>
+                    Find Jobs
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-user-tie"></i>
+                    Mock Interview
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Application Progress Infographic -->
+            <div class="application-progress">
+                <h2 class="section-title">
+                    <i class="fas fa-tasks"></i>
+                    Application Progress Tracker
+                </h2>
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="progress-line">
+                            <div class="progress-line-active"></div>
+                        </div>
+                        
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="step-label">Application Submitted</div>
+                            <div class="step-status">Completed</div>
+                        </div>
+
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="step-label">Under Review</div>
+                            <div class="step-status">Completed</div>
+                        </div>
+
+                        <div class="step current">
+                            <div class="step-circle">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="step-label">Interview Scheduled</div>
+                            <div class="step-status">In Progress</div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">Final Interview</div>
+                            <div class="step-status">Pending</div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-circle">5</div>
+                            <div class="step-label">Offer Decision</div>
+                            <div class="step-status">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Header -->
+            <div class="job-header">
+                <div class="job-title-section">
+                    <div class="job-title-info">
+                        <div class="company-logo-large" id="companyLogo">G</div>
+                        <div class="job-title-text">
+                            <h1 id="jobTitle">Software Engineer</h1>
+                            <div class="company-name-large" id="companyName">Google</div>
+                            <div class="job-meta">
+                                <div class="job-meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span id="jobLocation">Bangalore</span>
+                                </div>
+                                <div class="job-meta-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span id="jobType">Full-time</span>
+                                </div>
+                                <div class="job-meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="jobPosted">2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="apply-now-btn" onclick="openResumeModal()">
+                        <i class="fas fa-paper-plane"></i> Apply Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Job Content -->
+            <div class="job-content">
+                <!-- Main Job Details -->
+                <div class="job-details-main">
+                    <div class="section-title">
+                        <i class="fas fa-file-text"></i>
+                        Job Description
+                    </div>
+                    <div class="job-description-text" id="jobDescription">
+                        We're looking for talented software engineers to join our team and work on cutting-edge projects that impact billions of users worldwide. As a Software Engineer at Google, you'll work on a specific project critical to Google's needs with opportunities to switch teams and projects as you and our fast-paced business grow and evolve.
+                    </div>
+
+                    <div class="section-title">
+                        <i class="fas fa-check-circle"></i>
+                        Requirements
+                    </div>
+                    <ul class="requirements-list" id="jobRequirements">
+                        <li><i class="fas fa-check"></i>Bachelor's degree in Computer Science or equivalent practical experience</li>
+                        <li><i class="fas fa-check"></i>2+ years of experience with software development in one or more programming languages</li>
+                        <li><i class="fas fa-check"></i>1+ years of experience with data structures or algorithms</li>
+                        <li><i class="fas fa-check"></i>Experience with distributed systems, machine learning, or information retrieval</li>
+                        <li><i class="fas fa-check"></i>Strong problem-solving and analytical thinking skills</li>
+                    </ul>
+
+                    <div class="section-title">
+                        <i class="fas fa-star"></i>
+                        Benefits & Perks
+                    </div>
+                    <ul class="benefits-list" id="jobBenefits">
+                        <li><i class="fas fa-heart"></i>Comprehensive health insurance</li>
+                        <li><i class="fas fa-plane"></i>Flexible work arrangements and remote work options</li>
+                        <li><i class="fas fa-graduation-cap"></i>Learning and development opportunities</li>
+                        <li><i class="fas fa-utensils"></i>Free meals and snacks</li>
+                        <li><i class="fas fa-dumbbell"></i>On-site fitness facilities</li>
+                        <li><i class="fas fa-gift"></i>Stock options and performance bonuses</li>
+                    </ul>
+                </div>
+
+                <!-- Job Sidebar -->
+                <div class="job-sidebar">
+                    <!-- Job Information -->
+                    <div class="job-info-card">
+                        <h3 style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 15px;">
+                            <i class="fas fa-info-circle" style="color: #ff6b35; margin-right: 8px;"></i>
+                            Job Information
+                        </h3>
+                        <div class="info-item">
+                            <span class="info-label">Salary Range</span>
+                            <span class="info-value salary-highlight" id="jobSalary">₹12-18 LPA</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Experience Level</span>
+                            <span class="info-value" id="jobExperience">2-4 years</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Job Type</span>
+                            <span class="info-value" id="jobTypeDetail">Full-time</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Work Mode</span>
+                            <span class="info-value" id="workMode">Hybrid</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Applicants</span>
+                            <span class="info-value" id="applicantCount">50+ applicants</span>
+                        </div>
+                    </div>
+
+                    <!-- Company Information -->
+                    <div class="job-info-card">
+                        <h3 style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 15px;">
+                            <i class="fas fa-building" style="color: #ff6b35; margin-right: 8px;"></i>
+                            Company Information
+                        </h3>
+                        <div class="company-info">
+                            <div class="company-description" id="companyDescription">
+                                Google LLC is an American multinational technology company that specializes in Internet-related services and products, which include online advertising technologies, a search engine, cloud computing, software, and hardware.
+                            </div>
+                            <div class="company-stats">
+                                <div class="company-stat">
+                                    <div class="company-stat-number" id="companySize">100K+</div>
+                                    <div class="company-stat-label">Employees</div>
+                                </div>
+                                <div class="company-stat">
+                                    <div class="company-stat-number" id="companyFounded">1998</div>
+                                    <div class="company-stat-label">Founded</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Upload Modal -->
+    <div id="resumeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="modalClose">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-upload"></i>
+                <h2>Upload Your Resume</h2>
+            </div>
+            <p style="color: #6b7280; margin-bottom: 20px;">Please upload your resume to complete your job application</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-subtext">PDF, DOC, DOCX (Max 5MB)</div>
+            </div>
+            
+            <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" />
+            
+            <div class="file-info" id="fileInfo">
+                <div class="file-name" id="fileName"></div>
+                <div class="file-size" id="fileSize"></div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn btn-cancel" id="cancelBtn">Cancel</button>
+                <button class="modal-btn btn-submit" id="submitBtn" disabled>Submit Application</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Job data for different positions
+        const jobData = {
+            'software-engineer-google': {
+                title: 'Software Engineer',
+                company: 'Google',
+                logo: 'G',
+                location: 'Bangalore',
+                type: 'Full-time',
+                posted: '2 days ago',
+                salary: '₹12-18 LPA',
+                experience: '2-4 years',
+                workMode: 'Hybrid',
+                applicants: '50+ applicants',
+                description: "We're looking for talented software engineers to join our team and work on cutting-edge projects that impact billions of users worldwide. As a Software Engineer at Google, you'll work on a specific project critical to Google's needs with opportunities to switch teams and projects as you and our fast-paced business grow and evolve.",
+                requirements: [
+                    "Bachelor's degree in Computer Science or equivalent practical experience",
+                    "2+ years of experience with software development in one or more programming languages",
+                    "1+ years of experience with data structures or algorithms",
+                    "Experience with distributed systems, machine learning, or information retrieval",
+                    "Strong problem-solving and analytical thinking skills"
+                ],
+                benefits: [
+                    "Comprehensive health insurance",
+                    "Flexible work arrangements and remote work options",
+                    "Learning and development opportunities",
+                    "Free meals and snacks",
+                    "On-site fitness facilities",
+                    "Stock options and performance bonuses"
+                ],
+                companyDescription: "Google LLC is an American multinational technology company that specializes in Internet-related services and products, which include online advertising technologies, a search engine, cloud computing, software, and hardware.",
+                companySize: "100K+",
+                companyFounded: "1998"
+            },
+            'data-scientist-microsoft': {
+                title: 'Data Scientist',
+                company: 'Microsoft',
+                logo: 'M',
+                location: 'Hyderabad',
+                type: 'Full-time',
+                posted: '1 week ago',
+                salary: '₹15-22 LPA',
+                experience: '3-5 years',
+                workMode: 'Remote',
+                applicants: '30+ applicants',
+                description: "Join our AI research team and work on machine learning models that power Microsoft's products and services. You'll be responsible for developing and implementing advanced analytics solutions, building predictive models, and deriving actionable insights from large datasets.",
+                requirements: [
+                    "Master's degree in Data Science, Statistics, Computer Science, or related field",
+                    "3+ years of experience in data science or machine learning",
+                    "Proficiency in Python, R, and SQL",
+                    "Experience with machine learning frameworks (TensorFlow, PyTorch, scikit-learn)",
+                    "Strong statistical analysis and data visualization skills",
+                    "Experience with cloud platforms (Azure preferred)"
+                ],
+                benefits: [
+                    "Competitive salary and stock options",
+                    "Flexible work from home policy",
+                    "Professional development budget",
+                    "Health and wellness programs",
+                    "Parental leave benefits",
+                    "Access to latest technology and tools"
+                ],
+                companyDescription: "Microsoft Corporation is an American multinational technology corporation that develops, licenses, and sells computer software, consumer electronics, personal computers, and related services.",
+                companySize: "180K+",
+                companyFounded: "1975"
+            },
+            'product-manager-amazon': {
+                title: 'Product Manager',
+                company: 'Amazon',
+                logo: 'A',
+                location: 'Delhi',
+                type: 'Full-time',
+                posted: '3 days ago',
+                salary: '₹18-25 LPA',
+                experience: '4-6 years',
+                workMode: 'On-site',
+                applicants: '75+ applicants',
+                description: "Drive product strategy and execution for one of Amazon's fastest-growing business segments. You'll work with cross-functional teams to define product vision, prioritize features, and deliver innovative solutions that delight customers and drive business growth.",
+                requirements: [
+                    "Bachelor's degree in Business, Engineering, or related field",
+                    "4+ years of product management experience",
+                    "Experience with product lifecycle management",
+                    "Strong analytical and problem-solving skills",
+                    "Excellent communication and leadership abilities",
+                    "Experience with A/B testing and data-driven decision making"
+                ],
+                benefits: [
+                    "Competitive compensation package",
+                    "Employee discount on Amazon products",
+                    "Career advancement opportunities",
+                    "Health, dental, and vision insurance",
+                    "401(k) retirement plan",
+                    "Paid time off and holidays"
+                ],
+                companyDescription: "Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, digital streaming, and artificial intelligence.",
+                companySize: "1.5M+",
+                companyFounded: "1994"
+            },
+            'ui-designer-figma': {
+                title: 'Senior UI Designer',
+                company: 'Figma',
+                logo: 'F',
+                location: 'Remote',
+                type: 'Remote',
+                posted: '5 days ago',
+                salary: '₹10-16 LPA',
+                experience: '3-5 years',
+                workMode: 'Remote',
+                applicants: '40+ applicants',
+                description: "Design beautiful and intuitive user interfaces for our collaborative design platform used by millions. You'll work closely with product managers, engineers, and other designers to create exceptional user experiences that help teams build better products together.",
+                requirements: [
+                    "Bachelor's degree in Design, HCI, or related field",
+                    "3+ years of UI/UX design experience",
+                    "Proficiency in design tools (Figma, Sketch, Adobe Creative Suite)",
+                    "Strong portfolio demonstrating design thinking and process",
+                    "Experience with design systems and component libraries",
+                    "Understanding of frontend development principles"
+                ],
+                benefits: [
+                    "Fully remote work environment",
+                    "Equity participation",
+                    "Health, dental, and vision coverage",
+                    "Professional development stipend",
+                    "Home office setup budget",
+                    "Unlimited PTO policy"
+                ],
+                companyDescription: "Figma is a collaborative web application for interface design, with additional offline features enabled by desktop applications for macOS and Windows.",
+                companySize: "1K+",
+                companyFounded: "2012"
+            },
+            'marketing-manager-netflix': {
+                title: 'Marketing Manager',
+                company: 'Netflix',
+                logo: 'N',
+                location: 'Mumbai',
+                type: 'Full-time',
+                posted: '1 day ago',
+                salary: '₹14-20 LPA',
+                experience: '3-5 years',
+                workMode: 'Hybrid',
+                applicants: '25+ applicants',
+                description: "Lead marketing campaigns for original content and drive user acquisition across multiple channels. You'll be responsible for developing and executing integrated marketing strategies that increase brand awareness and subscriber growth in the Indian market.",
+                requirements: [
+                    "Bachelor's degree in Marketing, Communications, or related field",
+                    "3+ years of marketing experience, preferably in entertainment or media",
+                    "Experience with digital marketing channels and analytics",
+                    "Strong project management and organizational skills",
+                    "Creative thinking and strategic planning abilities",
+                    "Understanding of Indian market and cultural nuances"
+                ],
+                benefits: [
+                    "Stock options and performance bonuses",
+                    "Netflix subscription for family",
+                    "Flexible working hours",
+                    "Health and wellness programs",
+                    "Learning and development opportunities",
+                    "Collaborative and inclusive work environment"
+                ],
+                companyDescription: "Netflix, Inc. is an American streaming service and production company that offers a library of films and television series through distribution deals as well as its own productions.",
+                companySize: "12K+",
+                companyFounded: "1997"
+            },
+            'business-analyst-mckinsey': {
+                title: 'Business Analyst',
+                company: 'McKinsey & Company',
+                logo: 'Mc',
+                location: 'Delhi',
+                type: 'Full-time',
+                posted: '4 days ago',
+                salary: '₹20-28 LPA',
+                experience: '1-3 years',
+                workMode: 'On-site',
+                applicants: '100+ applicants',
+                description: "Work with Fortune 500 clients to solve complex business problems and drive strategic transformation. You'll conduct research, analyze data, and develop recommendations that help organizations improve their performance and achieve their goals.",
+                requirements: [
+                    "Bachelor's degree from top-tier university with excellent academic record",
+                    "1-3 years of experience in consulting, finance, or related field",
+                    "Strong analytical and quantitative skills",
+                    "Excellent communication and presentation abilities",
+                    "Proficiency in Excel, PowerPoint, and analytical tools",
+                    "Ability to work in fast-paced, client-focused environment"
+                ],
+                benefits: [
+                    "Highly competitive compensation",
+                    "Extensive travel opportunities",
+                    "World-class training and mentorship",
+                    "Career acceleration program",
+                    "Global networking opportunities",
+                    "MBA sponsorship after 2 years"
+                ],
+                companyDescription: "McKinsey & Company is a global management consulting firm that serves leading businesses, governments, non-governmental organizations, and not-for-profits.",
+                companySize: "30K+",
+                companyFounded: "1926"
+            }
+        };
+
+        // Modal elements
+        const modal = document.getElementById('resumeModal');
+        const closeBtn = document.getElementById('modalClose');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const resumeInput = document.getElementById('resumeInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+
+        // Modal functions
+        function openResumeModal() {
+            modal.style.display = 'block';
+            resetModal();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function resetModal() {
+            resumeInput.value = '';
+            fileInfo.style.display = 'none';
+            submitBtn.disabled = true;
+            uploadArea.style.display = 'block';
+        }
+
+        // Modal event listeners
+        closeBtn.onclick = closeModal;
+        cancelBtn.onclick = closeModal;
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // File upload functionality
+        uploadArea.onclick = function() {
+            resumeInput.click();
+        }
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelection(files[0]);
+            }
+        });
+
+        resumeInput.onchange = function(e) {
+            if (e.target.files.length > 0) {
+                handleFileSelection(e.target.files[0]);
+            }
+        }
+
+        function handleFileSelection(file) {
+            // Validate file type
+            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload only PDF, DOC, or DOCX files.');
+                return;
+            }
+
+            // Validate file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB.');
+                return;
+            }
+
+            // Display file info
+            fileName.textContent = file.name;
+            fileSize.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            
+            uploadArea.style.display = 'none';
+            fileInfo.style.display = 'block';
+            submitBtn.disabled = false;
+        }
+
+        submitBtn.onclick = function() {
+            const selectedJobId = sessionStorage.getItem('selectedJobId');
+            const job = jobData[selectedJobId];
+            
+            if (job) {
+                // Simulate application submission
+                setTimeout(() => {
+                    alert(`🎉 Application submitted successfully!\n\nJob: ${job.title} at ${job.company}\n\nYou will receive a confirmation email shortly with next steps.`);
+                    closeModal();
+                    
+                    // Update progress (in a real app, this would come from the server)
+                    updateApplicationProgress();
+                }, 1000);
+            }
+        }
+
+        function updateApplicationProgress() {
+            // This would typically update based on server response
+            // For demo purposes, we'll just show a success message
+            console.log('Application progress updated');
+        }
+
+        // Load job details based on selected job ID
+        function loadJobDetails() {
+            const selectedJobId = sessionStorage.getItem('selectedJobId') || 'software-engineer-google';
+            const job = jobData[selectedJobId];
+
+            if (job) {
+                // Update job header
+                document.getElementById('jobTitle').textContent = job.title;
+                document.getElementById('companyName').textContent = job.company;
+                document.getElementById('companyLogo').textContent = job.logo;
+                document.getElementById('jobLocation').textContent = job.location;
+                document.getElementById('jobType').textContent = job.type;
+                document.getElementById('jobPosted').textContent = job.posted;
+
+                // Update job description
+                document.getElementById('jobDescription').textContent = job.description;
+
+                // Update requirements
+                const requirementsList = document.getElementById('jobRequirements');
+                requirementsList.innerHTML = job.requirements.map(req => 
+                    `<li><i class="fas fa-check"></i>${req}</li>`
+                ).join('');
+
+                // Update benefits
+                const benefitsList = document.getElementById('jobBenefits');
+                benefitsList.innerHTML = job.benefits.map(benefit => 
+                    `<li><i class="fas fa-star"></i>${benefit}</li>`
+                ).join('');
+
+                // Update job information sidebar
+                document.getElementById('jobSalary').textContent = job.salary;
+                document.getElementById('jobExperience').textContent = job.experience;
+                document.getElementById('jobTypeDetail').textContent = job.type;
+                document.getElementById('workMode').textContent = job.workMode;
+                document.getElementById('applicantCount').textContent = job.applicants;
+
+                // Update company information
+                document.getElementById('companyDescription').textContent = job.companyDescription;
+                document.getElementById('companySize').textContent = job.companySize;
+                document.getElementById('companyFounded').textContent = job.companyFounded;
+
+                // Update page title
+                document.title = `${job.title} at ${job.company} - Chandigarh University`;
+            }
+        }
+
+        // Animate progress line on load
+        function animateProgressLine() {
+            const progressLine = document.querySelector('.progress-line-active');
+            if (progressLine) {
+                setTimeout(() => {
+                    progressLine.style.width = '50%'; // Currently at step 3 (Interview Scheduled)
+                }, 500);
+            }
+        }
+
+        // Smooth navigation function
+        function navigateWithFade(href) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+            loadJobDetails();
+            animateProgressLine();
+        });
+    </script>
+</body>
+</html>

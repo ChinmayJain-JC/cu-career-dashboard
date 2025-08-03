@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Opportunities - Chandigarh University</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Universal Scale Synchronization */
+        :root {
+            --container-max-width: 1200px;
+            --sidebar-width: 250px;
+            --main-padding: 20px 30px;
+            --card-padding: 15px;
+            --card-radius: 12px;
+            --grid-gap: 15px;
+            --section-gap: 20px;
+        }
+
+        /* Smooth page transition */
+        @view-transition {
+            navigation: auto;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        /* Synchronized Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e0e6ed;
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .logo-icon {
+            background: #ff6b35;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            background: #fff5f2;
+            color: #ff6b35;
+            font-weight: 500;
+        }
+
+        .nav-item.notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .quick-actions h4 {
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-item i {
+            width: 16px;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .action-item:hover {
+            background: #f8fafc;
+            color: #ff6b35;
+            padding-left: 8px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--main-padding);
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: var(--section-gap);
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Search & Filters Section */
+        .search-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #ff6b35;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .search-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-1px);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Featured Jobs Section */
+        .featured-jobs {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--grid-gap);
+        }
+
+        .job-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .job-card:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .job-company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .job-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .company-name {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .job-type {
+            background: #e0f2fe;
+            color: #0288d1;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .job-details {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-description {
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .job-salary {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .view-details-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-details-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Application Status Overview */
+        .application-overview {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--section-gap);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-top: 4px solid #10b981;
+        }
+
+        .status-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--grid-gap);
+            margin-bottom: 20px;
+        }
+
+        .status-stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">CU</div>
+                <div>
+                    <div style="font-weight: 600;">Chandigarh University</div>
+                    <div style="font-size: 12px; color: #6b7280;">Career Platform</div>
+                </div>
+            </div>
+            
+            <nav>
+                <a href="#" onclick="navigateWithFade('index.html')" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="career.html" class="nav-item active">
+                    <i class="fas fa-briefcase"></i>
+                    Career
+                </a>
+                <a href="#" onclick="navigateWithFade('student-report.html')" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Student Report
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    Resume
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-paper-plane"></i>
+                    Applications
+                </a>
+                <a href="#" class="nav-item notifications">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                    <div class="notification-badge">5</div>
+                </a>
+            </nav>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h4>Quick Actions</h4>
+                <a href="#" class="action-item">
+                    <i class="fas fa-upload"></i>
+                    Upload Resume
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-search"></i>
+                    Find Jobs
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-user-tie"></i>
+                    Mock Interview
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="page-header">
+                <h1 class="page-title">Career Opportunities</h1>
+                <p class="page-subtitle">Discover your perfect career path and find exciting job opportunities</p>
+            </div>
+
+            <!-- Search & Filters Section -->
+            <div class="search-section">
+                <div class="search-header">
+                    <div class="search-title">
+                        <i class="fas fa-search"></i>
+                        Find Your Perfect Job
+                    </div>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                
+                <div class="filters">
+                    <select class="filter-select">
+                        <option>Job Type</option>
+                        <option>Full-time</option>
+                        <option>Part-time</option>
+                        <option>Internship</option>
+                        <option>Contract</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Location</option>
+                        <option>Remote</option>
+                        <option>Mohali</option>
+                        <option>Chandigarh</option>
+                        <option>Delhi</option>
+                        <option>Bangalore</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Experience Level</option>
+                        <option>Fresher</option>
+                        <option>1-2 years</option>
+                        <option>3-5 years</option>
+                        <option>5+ years</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Salary Range</option>
+                        <option>0-3 LPA</option>
+                        <option>3-6 LPA</option>
+                        <option>6-10 LPA</option>
+                        <option>10+ LPA</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Application Status Overview -->
+            <div class="application-overview">
+                <div class="section-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Your Application Status
+                </div>
+                
+                <div class="status-stats">
+                    <div class="status-stat">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Applied</div>
+                    </div>
+                    <div class="status-stat">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">In Review</div>
+                    </div>
+                    <div class="status-stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Shortlisted</div>
+                    </div>
+                    <div class="status-stat">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Offer Received</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Jobs -->
+            <div class="featured-jobs">
+                <div class="section-title">
+                    <i class="fas fa-star"></i>
+                    Featured Opportunities
+                </div>
+                
+                <div class="jobs-grid">
+                    <div class="job-card" onclick="openJobDetails('software-engineer-google')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">G</div>
+                                <div>
+                                    <div class="job-title">Software Engineer</div>
+                                    <div class="company-name">Google</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Full-time</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bangalore</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>2 days ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>50+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            We're looking for talented software engineers to join our team and work on cutting-edge projects that impact billions of users worldwide.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹12-18 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('software-engineer-google')">View Job Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="job-card" onclick="openJobDetails('data-scientist-microsoft')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">M</div>
+                                <div>
+                                    <div class="job-title">Data Scientist</div>
+                                    <div class="company-name">Microsoft</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Full-time</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Hyderabad</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>1 week ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>30+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            Join our AI research team and work on machine learning models that power Microsoft's products and services.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹15-22 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('data-scientist-microsoft')">View Job Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="job-card" onclick="openJobDetails('product-manager-amazon')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">A</div>
+                                <div>
+                                    <div class="job-title">Product Manager</div>
+                                    <div class="company-name">Amazon</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Full-time</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Delhi</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>3 days ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>75+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            Drive product strategy and execution for one of Amazon's fastest-growing business segments.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹18-25 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('product-manager-amazon')">View Job Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="job-card" onclick="openJobDetails('ui-designer-figma')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">F</div>
+                                <div>
+                                    <div class="job-title">Senior UI Designer</div>
+                                    <div class="company-name">Figma</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Remote</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Remote</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>5 days ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>40+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            Design beautiful and intuitive user interfaces for our collaborative design platform used by millions.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹10-16 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('ui-designer-figma')">View Job Details</button>
+                        </div>
+                    </div>
+
+                    <div class="job-card" onclick="openJobDetails('marketing-manager-netflix')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">N</div>
+                                <div>
+                                    <div class="job-title">Marketing Manager</div>
+                                    <div class="company-name">Netflix</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Full-time</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Mumbai</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>1 day ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>25+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            Lead marketing campaigns for original content and drive user acquisition across multiple channels.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹14-20 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('marketing-manager-netflix')">View Job Details</button>
+                        </div>
+                    </div>
+
+                    <div class="job-card" onclick="openJobDetails('business-analyst-mckinsey')">
+                        <div class="job-header">
+                            <div class="job-company">
+                                <div class="company-logo">Mc</div>
+                                <div>
+                                    <div class="job-title">Business Analyst</div>
+                                    <div class="company-name">McKinsey & Company</div>
+                                </div>
+                            </div>
+                            <div class="job-type">Full-time</div>
+                        </div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Delhi</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>4 days ago</span>
+                            </div>
+                            <div class="job-detail">
+                                <i class="fas fa-users"></i>
+                                <span>100+ applicants</span>
+                            </div>
+                        </div>
+                        
+                        <div class="job-description">
+                            Work with Fortune 500 clients to solve complex business problems and drive strategic transformation.
+                        </div>
+                        
+                        <div class="job-footer">
+                            <div class="job-salary">₹20-28 LPA</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('business-analyst-mckinsey')">View Job Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth page fade-in effect on load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+
+        // Smooth navigation function
+        function navigateWithFade(href) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+
+        // Open job details page
+        function openJobDetails(jobId) {
+            // Store job ID in sessionStorage for the details page
+            sessionStorage.setItem('selectedJobId', jobId);
+            
+            // Navigate to job details page with fade effect
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = 'job-details.html';
+            }, 300);
+        }
+
+        // Search functionality
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const query = document.querySelector('.search-input').value;
+            console.log(`Searching for: ${query}`);
+            // Implementation would perform search and update results
+        });
+    </script>
+</body>
+</html>

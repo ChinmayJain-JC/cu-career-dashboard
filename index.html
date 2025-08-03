@@ -12,10 +12,21 @@
             box-sizing: border-box;
         }
 
+        /* Smooth page transition to fix zoom out effect */
+        @view-transition {
+            navigation: auto;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f7fa;
             color: #333;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
         }
 
         .container {
@@ -75,14 +86,15 @@
             font-weight: 500;
         }
 
+        /* FIXED: Added position relative for notification nav item */
         .nav-item.notifications {
             position: relative;
         }
 
         .notification-badge {
             position: absolute;
-            top: 8px;
-            left: 15px;
+            top: -2px;
+            right: 5px;
             background: #ef4444;
             color: white;
             border-radius: 50%;
@@ -94,6 +106,8 @@
             justify-content: center;
             font-weight: bold;
             animation: pulse 2s infinite;
+            z-index: 10;
+            pointer-events: none;
         }
 
         @keyframes pulse {
@@ -328,168 +342,6 @@
             text-transform: uppercase;
         }
 
-        /* Student Report - Compact */
-        .student-report {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-top: 4px solid #ff6b35;
-        }
-
-        .report-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .view-detailed {
-            color: #ff6b35;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .view-detailed:hover {
-            text-decoration: underline;
-        }
-
-        /* Header stats */
-        .report-header-stats {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .header-stat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .header-stat-icon {
-            width: 24px;
-            height: 24px;
-            background: #ff6b35;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
-
-        .header-stat-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header-stat-number {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1f2937;
-            line-height: 1;
-        }
-
-        .header-stat-label {
-            font-size: 9px;
-            color: #6b7280;
-            text-transform: capitalize;
-        }
-
-        /* Conversion funnel bars */
-        .conversion-funnel {
-            margin-bottom: 15px;
-        }
-
-        .funnel-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 10px;
-        }
-
-        .funnel-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .funnel-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 10px;
-            flex-shrink: 0;
-        }
-
-        .funnel-icon.aptitude {
-            background: #3b82f6;
-        }
-
-        .funnel-icon.technical {
-            background: #10b981;
-        }
-
-        .funnel-icon.gd {
-            background: #3b82f6;
-        }
-
-        .funnel-icon.final {
-            background: #10b981;
-        }
-
-        .funnel-content {
-            flex: 1;
-        }
-
-        .funnel-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 3px;
-        }
-
-        .progress-track {
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 8px;
-            transition: width 1s ease-in-out;
-        }
-
-        .progress-fill.green {
-            background: #10b981;
-        }
-
-        .progress-fill.orange {
-            background: #f59e0b;
-        }
-
-        .progress-fill.blue {
-            background: #3b82f6;
-        }
-
-        .funnel-percentage {
-            font-size: 11px;
-            font-weight: 700;
-            color: #1f2937;
-            min-width: 35px;
-            text-align: right;
-        }
-
         /* Enhanced Notifications Section */
         .notifications-section {
             background: white;
@@ -610,6 +462,131 @@
             background: #fef2f2;
         }
 
+        /* Student Report - Enhanced Compact */
+        .student-report {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-top: 4px solid #ff6b35;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .report-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .report-title::before {
+            content: "\f080";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #ff6b35;
+        }
+
+        .view-detailed {
+            color: #ff6b35;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+        }
+
+        .view-detailed:hover {
+            background-color: rgba(255, 107, 53, 0.1);
+            border-color: #ff6b35;
+            transform: translateY(-1px);
+        }
+
+        /* Enhanced Header Stats */
+        .header-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 107, 53, 0.1));
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat:hover::before {
+            left: 100%;
+        }
+
+        .stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .delta {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 8px;
+            background: #10b981;
+            color: white;
+            font-weight: 600;
+        }
+
+        .delta.positive {
+            background: #10b981;
+            color: white;
+        }
+
+        .delta.negative {
+            background: #ef4444;
+            color: white;
+        }
+
         /* Recent Applications - Compact */
         .recent-applications {
             background: white;
@@ -657,6 +634,141 @@
             color: #f57c00;
         }
 
+        /* Circle Progress - Simplified for compact view */
+        .circle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .circle-card {
+            background: rgba(255, 107, 53, 0.02);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 8px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+            width: 60px;
+            height: 60px;
+        }
+
+        .circular-progress .bg-circle {
+            stroke: #e5e7eb;
+            stroke-width: 4;
+            fill: none;
+        }
+
+        .circular-progress .progress-circle {
+            stroke: #ff6b35;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-dasharray: 160;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+
+        .circular-progress .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .circle-label {
+            font-size: 10px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Conversion funnel - Simplified */
+        .conversion-funnel {
+            margin-bottom: 15px;
+        }
+
+        .funnel-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .funnel-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 40px;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .funnel-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .funnel-track {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .funnel-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #ff6b35, #ff8f65);
+            transition: width 1s ease-in-out;
+        }
+
+        .funnel-percent {
+            font-size: 9px;
+            font-weight: 600;
+            color: #ff6b35;
+            text-align: right;
+        }
+
+        /* Quick Stats Enhancement */
+        .quick-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid #ff6b35;
+        }
+
+        .quick-stat {
+            text-align: center;
+        }
+
+        .quick-stat-number {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+
+        .quick-stat-label {
+            font-size: 9px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .main-content {
@@ -701,17 +813,21 @@
             </div>
             
             <nav>
-                <a href="#" class="nav-item active">
+                <a href="index.html" class="nav-item active">
                     <i class="fas fa-tachometer-alt"></i>
                     Dashboard
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" onclick="navigateWithFade('career.html')" class="nav-item">
                     <i class="fas fa-briefcase"></i>
                     Career
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" onclick="navigateWithFade('student-report.html')" class="nav-item">
                     <i class="fas fa-chart-bar"></i>
                     Student Report
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    Resume
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-paper-plane"></i>
@@ -722,8 +838,7 @@
                     Notifications
                     <div class="notification-badge">5</div>
                 </a>
-            </nav>
-
+             </nav>
             <!-- Quick Actions -->
             <div class="quick-actions">
                 <h4>Quick Actions</h4>
@@ -844,97 +959,7 @@
             </div>
 
             <div class="right-section">
-                <!-- Student Report - Compact -->
-                <div class="student-report">
-                    <div class="report-header">
-                        <div class="section-title">
-                            Student Report Dashboard
-                        </div>
-                        <a href="#" class="view-detailed">View Detailed →</a>
-                    </div>
-                    
-                    <!-- Header Stats -->
-                    <div class="report-header-stats">
-                        <div class="header-stat">
-                            <div class="header-stat-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="header-stat-text">
-                                <div class="header-stat-number">40</div>
-                                <div class="header-stat-label">Rounds Cleared</div>
-                            </div>
-                        </div>
-                        
-                        <div class="header-stat">
-                            <div class="header-stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="header-stat-text">
-                                <div class="header-stat-number">60%</div>
-                                <div class="header-stat-label">Conversion Rate</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Application Conversion Funnel -->
-                    <div class="conversion-funnel">
-                        <div class="funnel-title">Application Conversion Funnel</div>
-                        
-                        <div class="funnel-item">
-                            <div class="funnel-icon aptitude">
-                                <i class="fas fa-clipboard-list"></i>
-                            </div>
-                            <div class="funnel-content">
-                                <div class="funnel-label">Aptitude</div>
-                                <div class="progress-track">
-                                    <div class="progress-fill green" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                            <div class="funnel-percentage">100%</div>
-                        </div>
-
-                        <div class="funnel-item">
-                            <div class="funnel-icon technical">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <div class="funnel-content">
-                                <div class="funnel-label">Technical</div>
-                                <div class="progress-track">
-                                    <div class="progress-fill orange" style="width: 75%;"></div>
-                                </div>
-                            </div>
-                            <div class="funnel-percentage">75%</div>
-                        </div>
-
-                        <div class="funnel-item">
-                            <div class="funnel-icon gd">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="funnel-content">
-                                <div class="funnel-label">Group Discussion</div>
-                                <div class="progress-track">
-                                    <div class="progress-fill orange" style="width: 62.5%;"></div>
-                                </div>
-                            </div>
-                            <div class="funnel-percentage">62.5%</div>
-                        </div>
-
-                        <div class="funnel-item">
-                            <div class="funnel-icon final">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="funnel-content">
-                                <div class="funnel-label">Final Interview</div>
-                                <div class="progress-track">
-                                    <div class="progress-fill blue" style="width: 40%;"></div>
-                                </div>
-                            </div>
-                            <div class="funnel-percentage">40%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enhanced Notifications Section -->
+                <!-- PRIORITY 1: Enhanced Notifications Section (Moved to Top) -->
                 <div class="notifications-section">
                     <div class="notifications-header">
                         <div class="notifications-title">
@@ -988,21 +1013,164 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ENHANCED: Student Report Dashboard Card -->
+                <div class="student-report">
+                    <div class="report-header">
+                        <div class="report-title">Student Report Dashboard</div>
+                        <a href="#" onclick="navigateWithFade('student-report.html')" class="view-detailed">View Detailed →</a>
+                    </div>
+                    
+                    <!-- Quick Overview Stats -->
+                    <div class="quick-stats">
+                        <div class="quick-stat">
+                            <div class="quick-stat-number">100</div>
+                            <div class="quick-stat-label">Applied</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-number">40</div>
+                            <div class="quick-stat-label">Cleared</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-number">5</div>
+                            <div class="quick-stat-label">Final</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Interactive Stats -->
+                    <div class="header-stats">
+                        <div class="stat clickable" onclick="showDetailedStats('rounds')" title="Click for detailed breakdown">
+                            <div class="stat-number">40 <span class="delta">+3</span></div>
+                            <div class="stat-label">Rounds Cleared</div>
+                        </div>
+                        <div class="stat clickable" onclick="showDetailedStats('conversion')" title="Click for trend analysis">
+                            <div class="stat-number">60% <span class="delta positive">+5%</span></div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Circle Progress -->
+                    <div class="circle-grid">
+                        <div class="circle-card">
+                            <div class="circular-progress">
+                                <svg viewBox="0 0 60 60">
+                                    <circle cx="30" cy="30" r="25" class="bg-circle"></circle>
+                                    <circle cx="30" cy="30" r="25" class="progress-circle" stroke-dashoffset="75"></circle>
+                                </svg>
+                                <div class="center-text">40</div>
+                            </div>
+                            <div class="circle-label">Aptitude</div>
+                        </div>
+
+                        <div class="circle-card">
+                            <div class="circular-progress">
+                                <svg viewBox="0 0 60 60">
+                                    <circle cx="30" cy="30" r="25" class="bg-circle"></circle>
+                                    <circle cx="30" cy="30" r="25" class="progress-circle" stroke-dashoffset="100"></circle>
+                                </svg>
+                                <div class="center-text">15</div>
+                            </div>
+                            <div class="circle-label">Technical</div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Conversion Funnel -->
+                    <div class="conversion-funnel">
+                        <div class="funnel-title">Placement Progress</div>
+                        
+                        <div class="funnel-row">
+                            <div class="funnel-label">Applied</div>
+                            <div class="funnel-track"><div class="funnel-fill" style="width: 100%;"></div></div>
+                            <div class="funnel-percent">100%</div>
+                        </div>
+
+                        <div class="funnel-row">
+                            <div class="funnel-label">Shortlist</div>
+                            <div class="funnel-track"><div class="funnel-fill" style="width: 75%;"></div></div>
+                            <div class="funnel-percent">75%</div>
+                        </div>
+
+                        <div class="funnel-row">
+                            <div class="funnel-label">Aptitude</div>
+                            <div class="funnel-track"><div class="funnel-fill" style="width: 53%;"></div></div>
+                            <div class="funnel-percent">53%</div>
+                        </div>
+
+                        <div class="funnel-row">
+                            <div class="funnel-label">Technical</div>
+                            <div class="funnel-track"><div class="funnel-fill" style="width: 37%;"></div></div>
+                            <div class="funnel-percent">37%</div>
+                        </div>
+
+                        <div class="funnel-row">
+                            <div class="funnel-label">Final</div>
+                            <div class="funnel-track"><div class="funnel-fill" style="width: 33%;"></div></div>
+                            <div class="funnel-percent">33%</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Animate progress bars on load
+        // Smooth page fade-in effect on load
         document.addEventListener('DOMContentLoaded', function() {
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach((bar, index) => {
+            // Add loaded class for fade in
+            document.body.classList.add('loaded');
+            
+            // Animate funnel bars
+            document.querySelectorAll('.funnel-fill').forEach((bar, index) => {
                 const width = bar.style.width;
                 bar.style.width = '0%';
                 
                 setTimeout(() => {
                     bar.style.width = width;
                 }, 500 + (index * 200));
+            });
+
+            // Animate circular progress with correct values
+            document.querySelectorAll('.progress-circle').forEach((c, i) => {
+                c.style.strokeDashoffset = '160';
+                
+                setTimeout(() => {
+                    if (i === 0) {
+                        c.style.strokeDashoffset = '75';  // Aptitude
+                    } else {
+                        c.style.strokeDashoffset = '100'; // Technical
+                    }
+                }, 400 + i * 200);
+            });
+        });
+
+        // Smooth navigation function
+        function navigateWithFade(href) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+
+        // Enhanced interactivity for student report stats
+        function showDetailedStats(type) {
+            // This would show a modal or tooltip with detailed breakdown
+            console.log(`Showing detailed stats for: ${type}`);
+            // Future implementation: Show popup with detailed analytics
+            
+            // Visual feedback for now
+            event.target.closest('.stat').style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.closest('.stat').style.transform = 'translateY(-2px)';
+            }, 100);
+        }
+
+        // Add hover effects to clickable elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableStats = document.querySelectorAll('.stat.clickable');
+            clickableStats.forEach(stat => {
+                stat.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
             });
         });
     </script>

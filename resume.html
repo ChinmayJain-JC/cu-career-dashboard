@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Management - Chandigarh University</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Universal Scale Synchronization */
+        :root {
+            --container-max-width: 1200px;
+            --sidebar-width: 250px;
+            --main-padding: 20px 30px;
+            --card-padding: 20px;
+            --card-radius: 12px;
+            --grid-gap: 15px;
+            --section-gap: 20px;
+        }
+
+        /* Smooth page transition */
+        @view-transition {
+            navigation: auto;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        /* Synchronized Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e0e6ed;
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .logo-icon {
+            background: #ff6b35;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            background: #fff5f2;
+            color: #ff6b35;
+            font-weight: 500;
+        }
+
+        .nav-item.notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Standardized Quick Actions */
+        .quick-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .quick-actions h4 {
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-item i {
+            width: 16px;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .action-item:hover {
+            background: #f8fafc;
+            color: #ff6b35;
+            padding-left: 8px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--main-padding);
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: var(--section-gap);
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Smaller Upload Section */
+        .upload-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 15px;
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid #10b981;
+        }
+
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .upload-area:hover {
+            border-color: #10b981;
+            background: #ecfdf5;
+            transform: translateY(-1px);
+        }
+
+        .upload-area.dragover {
+            border-color: #10b981;
+            background: #ecfdf5;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+
+        .upload-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .upload-subtitle {
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .upload-formats {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        #resumeFileInput {
+            display: none;
+        }
+
+        .upload-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        /* Resume List Section - Tile View */
+        .resume-list-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .resume-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .create-new-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .create-new-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Tile View for Resumes */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .resume-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: #fafafa;
+        }
+
+        .resume-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .resume-preview {
+            height: 120px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .resume-preview-icon {
+            font-size: 32px;
+            color: #9ca3af;
+        }
+
+        .resume-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-draft {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .resume-info {
+            padding: 12px;
+        }
+
+        .resume-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .resume-details {
+            font-size: 10px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .resume-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .action-btn.primary {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .action-btn.primary:hover {
+            background: #2563eb;
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #6b7280;
+        }
+
+        .action-btn.secondary:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .action-btn.danger {
+            background: white;
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+
+        .action-btn.danger:hover {
+            background: #fef2f2;
+        }
+
+        /* Smaller Resume Templates Section */
+        .templates-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-gap);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .template-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .template-preview {
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .template-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .template-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 3px;
+        }
+
+        .template-type {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        /* CU Resume Format Special Styling */
+        .template-card.cu-format {
+            border: 2px solid #ff6b35;
+            position: relative;
+        }
+
+        .template-card.cu-format::before {
+            content: "RECOMMENDED";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #ff6b35;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .template-preview.cu-format {
+            background: linear-gradient(135deg, #ff6b35, #ff8f65);
+        }
+
+        /* Resume Builder Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 0;
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .close {
+            color: #9ca3af;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #374151;
+        }
+
+        .resume-builder {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .builder-sidebar {
+            width: 300px;
+            background: #f8fafc;
+            border-right: 1px solid #e5e7eb;
+            overflow-y: auto;
+        }
+
+        .builder-section {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            background: #f1f5f9;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .add-item-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .add-item-btn:hover {
+            background: #059669;
+        }
+
+        .resume-preview-area {
+            flex: 1;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .resume-document {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-height: 800px;
+            padding: 40px;
+            font-family: 'Times New Roman', serif;
+            line-height: 1.4;
+        }
+
+        .resume-header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .resume-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .resume-contact {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .resume-section {
+            margin-bottom: 25px;
+        }
+
+        .resume-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f2937;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .save-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .save-btn:hover {
+            background: #059669;
+        }
+
+        .download-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #2563eb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+
+            .resume-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .template-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .resume-builder {
+                flex-direction: column;
+            }
+
+            .builder-sidebar {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">CU</div>
+                <div>
+                    <div style="font-weight: 600;">Chandigarh University</div>
+                    <div style="font-size: 12px; color: #6b7280;">Career Platform</div>
+                </div>
+            </div>
+            
+            <nav>
+                <a href="#" onclick="navigateWithFade('index.html')" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#" onclick="navigateWithFade('career.html')" class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    Career
+                </a>
+                <a href="#" onclick="navigateWithFade('student-report.html')" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    Student Report
+                </a>
+                <a href="resume.html" class="nav-item active">
+                    <i class="fas fa-file-alt"></i>
+                    Resume
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-paper-plane"></i>
+                    Applications
+                </a>
+                <a href="#" class="nav-item notifications">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                    <div class="notification-badge">5</div>
+                </a>
+            </nav>
+
+            <!-- Standardized Quick Actions -->
+            <div class="quick-actions">
+                <h4>Quick Actions</h4>
+                <a href="#" class="action-item" onclick="document.getElementById('resumeFileInput').click()">
+                    <i class="fas fa-upload"></i>
+                    Upload Resume
+                </a>
+                <a href="#" class="action-item" onclick="navigateWithFade('career.html')">
+                    <i class="fas fa-search"></i>
+                    Find Jobs
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="page-header">
+                <h1 class="page-title">Resume Management</h1>
+                <p class="page-subtitle">Manage your resumes, create new ones with AI, and track your job search progress all in one place.</p>
+            </div>
+
+            <!-- Smaller Upload Section -->
+            <div class="upload-section">
+                <div class="section-title">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Upload Your Resume
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-title">Drag & drop your resume here</div>
+                    <div class="upload-subtitle">or click to browse files</div>
+                    <button class="upload-btn" onclick="document.getElementById('resumeFileInput').click()">
+                        Choose File
+                    </button>
+                    <div class="upload-formats">Supported formats: PDF, DOC, DOCX (Max 5MB)</div>
+                </div>
+                
+                <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" style="display: none;">
+            </div>
+
+            <!-- Your Resumes - Tile View -->
+            <div class="resume-list-section">
+                <div class="resume-list-header">
+                    <div class="section-title">
+                        <i class="fas fa-folder"></i>
+                        Your Resumes
+                    </div>
+                    <button class="create-new-btn" onclick="openResumeBuilder()">
+                        <i class="fas fa-plus"></i>
+                        Create New Resume
+                    </button>
+                </div>
+                <p style="color: #6b7280; margin-bottom: 20px; font-size: 14px;">Manage and analyze your uploaded resumes</p>
+                
+                <div class="resume-grid" id="resumeGrid">
+                    <!-- Sample Resume Cards in Tile View -->
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-active">Active</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">22BAI7109_Resume.pdf</div>
+                            <div class="resume-details">Aug 1, 2025 at 04:25 PM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-draft">Draft</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">Chinmay_Jain_Resume.pdf</div>
+                            <div class="resume-details">Aug 1, 2025 at 04:17 PM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-active">Active</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">22BAI7109_OYO_Resume.pdf</div>
+                            <div class="resume-details">Aug 1, 2025 at 04:15 PM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-draft">Draft</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">Software_Engineer_Resume.pdf</div>
+                            <div class="resume-details">Jul 30, 2025 at 02:30 PM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-active">Active</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">Marketing_Internship.pdf</div>
+                            <div class="resume-details">Jul 28, 2025 at 11:45 AM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resume-card">
+                        <div class="resume-preview">
+                            <i class="fas fa-file-alt resume-preview-icon"></i>
+                            <div class="resume-status status-draft">Draft</div>
+                        </div>
+                        <div class="resume-info">
+                            <div class="resume-name">Data_Analyst_CV.pdf</div>
+                            <div class="resume-details">Jul 25, 2025 at 03:20 PM</div>
+                            <div class="resume-actions">
+                                <button class="action-btn primary" onclick="openResumeBuilder('edit')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="viewResume()">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn secondary" onclick="downloadResume()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn danger" onclick="deleteResume()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smaller Resume Templates with CU Format -->
+            <div class="templates-section">
+                <div class="section-title">
+                    <i class="fas fa-th-large"></i>
+                    Resume Templates
+                </div>
+                <p style="color: #6b7280; margin-bottom: 20px; font-size: 14px;">Choose from professionally designed templates to create your perfect resume</p>
+                
+                <div class="template-grid">
+                    <!-- CU Resume Format - Special -->
+                    <div class="template-card cu-format" onclick="openResumeBuilder('cu-format')">
+                        <div class="template-preview cu-format">
+                            CU
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">CU Resume Format</div>
+                            <div class="template-type">University Standard</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template1')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            Modern
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Modern Professional</div>
+                            <div class="template-type">Clean & Minimal</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template2')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            Creative
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Creative Designer</div>
+                            <div class="template-type">Colorful & Bold</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template3')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            Classic
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Classic Business</div>
+                            <div class="template-type">Traditional</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template4')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            Tech
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Tech Professional</div>
+                            <div class="template-type">Modern & Tech</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template5')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            Elegant
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Elegant Executive</div>
+                            <div class="template-type">Professional</div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" onclick="openResumeBuilder('template6')">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                            Simple
+                        </div>
+                        <div class="template-info">
+                            <div class="template-name">Simple & Clean</div>
+                            <div class="template-type">Minimalist</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Builder Modal -->
+    <div id="resumeBuilderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Resume Builder</h2>
+                <span class="close" onclick="closeResumeBuilder()">&times;</span>
+            </div>
+            
+            <div class="resume-builder">
+                <!-- Builder Sidebar -->
+                <div class="builder-sidebar">
+                    <div class="builder-section">
+                        <div class="section-header" onclick="toggleSection('personal')">
+                            Personal Information
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="section-content active" id="personal-section">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" id="fullName" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" id="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-input" id="phone" placeholder="+91 9876543210">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-input" id="location" placeholder="City, State">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">LinkedIn</label>
+                                <input type="url" class="form-input" id="linkedin" placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <div class="section-header" onclick="toggleSection('summary')">
+                            Professional Summary
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="section-content" id="summary-section">
+                            <div class="form-group">
+                                <label class="form-label">Summary</label>
+                                <textarea class="form-input form-textarea" id="summary" placeholder="Write a brief professional summary..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <div class="section-header" onclick="toggleSection('experience')">
+                            Work Experience
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="section-content" id="experience-section">
+                            <div class="experience-item">
+                                <div class="form-group">
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" class="form-input" placeholder="Software Engineer">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" class="form-input" placeholder="Company Name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Duration</label>
+                                    <input type="text" class="form-input" placeholder="Jan 2023 - Present">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-input form-textarea" placeholder="Describe your responsibilities..."></textarea>
+                                </div>
+                            </div>
+                            <button class="add-item-btn">+ Add Experience</button>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <div class="section-header" onclick="toggleSection('education')">
+                            Education
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="section-content" id="education-section">
+                            <div class="education-item">
+                                <div class="form-group">
+                                    <label class="form-label">Degree</label>
+                                    <input type="text" class="form-input" placeholder="Bachelor of Technology">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Institution</label>
+                                    <input type="text" class="form-input" placeholder="Chandigarh University">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Year</label>
+                                    <input type="text" class="form-input" placeholder="2021 - 2025">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CGPA/Percentage</label>
+                                    <input type="text" class="form-input" placeholder="8.5 CGPA">
+                                </div>
+                            </div>
+                            <button class="add-item-btn">+ Add Education</button>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <div class="section-header" onclick="toggleSection('skills')">
+                            Skills
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="section-content" id="skills-section">
+                            <div class="form-group">
+                                <label class="form-label">Technical Skills</label>
+                                <textarea class="form-input form-textarea" placeholder="JavaScript, Python, React, Node.js..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Soft Skills</label>
+                                <textarea class="form-input form-textarea" placeholder="Leadership, Communication, Problem-solving..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resume Preview -->
+                <div class="resume-preview-area">
+                    <div class="resume-document" id="resumePreview">
+                        <div class="resume-header">
+                            <div class="resume-name" id="previewName">Your Name</div>
+                            <div class="resume-contact" id="previewContact">
+                                your@email.com | +91 9876543210 | City, State | linkedin.com/in/username
+                            </div>
+                        </div>
+
+                        <div class="resume-section">
+                            <div class="resume-section-title">PROFESSIONAL SUMMARY</div>
+                            <div id="previewSummary">Your professional summary will appear here...</div>
+                        </div>
+
+                        <div class="resume-section">
+                            <div class="resume-section-title">WORK EXPERIENCE</div>
+                            <div id="previewExperience">Your work experience will appear here...</div>
+                        </div>
+
+                        <div class="resume-section">
+                            <div class="resume-section-title">EDUCATION</div>
+                            <div id="previewEducation">Your education details will appear here...</div>
+                        </div>
+
+                        <div class="resume-section">
+                            <div class="resume-section-title">SKILLS</div>
+                            <div id="previewSkills">Your skills will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div>
+                    <button class="save-btn" onclick="saveResume()">
+                        <i class="fas fa-save"></i> Save Resume
+                    </button>
+                </div>
+                <div>
+                    <button class="download-btn" onclick="downloadResumeAsPDF()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Resume Management System
+        class ResumeManager {
+            constructor() {
+                this.resumes = [
+                    {
+                        id: 1,
+                        name: '22BAI7109_Resume.pdf',
+                        created: 'Aug 1, 2025 at 04:25 PM',
+                        status: 'active'
+                    },
+                    {
+                        id: 2,
+                        name: 'Chinmay_Jain_Resume.pdf',
+                        created: 'Aug 1, 2025 at 04:17 PM',
+                        status: 'draft'
+                    },
+                    {
+                        id: 3,
+                        name: '22BAI7109_OYO_Resume.pdf',
+                        created: 'Aug 1, 2025 at 04:15 PM',
+                        status: 'active'
+                    }
+                ];
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                // File upload functionality
+                const fileInput = document.getElementById('resumeFileInput');
+                const uploadArea = document.getElementById('uploadArea');
+
+                // Drag and drop functionality
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+
+                uploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        this.handleFileUpload(files[0]);
+                    }
+                });
+
+                uploadArea.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handleFileUpload(e.target.files[0]);
+                    }
+                });
+
+                // Form inputs for live preview
+                document.getElementById('fullName').addEventListener('input', this.updatePreview);
+                document.getElementById('email').addEventListener('input', this.updatePreview);
+                document.getElementById('phone').addEventListener('input', this.updatePreview);
+                document.getElementById('location').addEventListener('input', this.updatePreview);
+                document.getElementById('linkedin').addEventListener('input', this.updatePreview);
+                document.getElementById('summary').addEventListener('input', this.updatePreview);
+            }
+
+            handleFileUpload(file) {
+                // Validate file type
+                const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload only PDF, DOC, or DOCX files.');
+                    return;
+                }
+
+                // Validate file size (5MB limit)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB.');
+                    return;
+                }
+
+                // Simulate upload process
+                console.log('Uploading file:', file.name);
+                alert(`✅ Resume "${file.name}" uploaded successfully!\n\nYou can now view and edit it from your resume collection.`);
+                
+                // Add to resume list
+                this.addResume(file.name);
+            }
+
+            addResume(fileName) {
+                const newResume = {
+                    id: this.resumes.length + 1,
+                    name: fileName,
+                    created: new Date().toLocaleDateString('en-US', { 
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }),
+                    status: 'draft'
+                };
+                
+                this.resumes.push(newResume);
+                this.renderResumeGrid();
+            }
+
+            renderResumeGrid() {
+                // Grid is already rendered in HTML for demo purposes
+                console.log('Resume grid rendered');
+            }
+
+            deleteResume(id) {
+                if (confirm('Are you sure you want to delete this resume?')) {
+                    this.resumes = this.resumes.filter(resume => resume.id !== id);
+                    this.renderResumeGrid();
+                    alert('Resume deleted successfully!');
+                }
+            }
+
+            updatePreview() {
+                const fullName = document.getElementById('fullName').value || 'Your Name';
+                const email = document.getElementById('email').value || 'your@email.com';
+                const phone = document.getElementById('phone').value || '+91 9876543210';
+                const location = document.getElementById('location').value || 'City, State';
+                const linkedin = document.getElementById('linkedin').value || 'linkedin.com/in/username';
+                const summary = document.getElementById('summary').value || 'Your professional summary will appear here...';
+
+                document.getElementById('previewName').textContent = fullName;
+                document.getElementById('previewContact').textContent = `${email} | ${phone} | ${location} | ${linkedin}`;
+                document.getElementById('previewSummary').textContent = summary;
+            }
+        }
+
+        // Initialize Resume Manager
+        const resumeManager = new ResumeManager();
+
+        // Modal Functions
+        function openResumeBuilder(mode = 'new') {
+            const modal = document.getElementById('resumeBuilderModal');
+            modal.style.display = 'block';
+            
+            if (mode === 'edit') {
+                console.log('Opening resume for editing');
+            } else if (mode === 'cu-format') {
+                console.log('Opening CU Resume Format template');
+                // Pre-fill with CU format styling
+                alert('🎓 CU Resume Format Selected!\n\nThis template follows Chandigarh University\'s recommended resume format for placements.');
+            } else if (mode.startsWith('template')) {
+                console.log('Opening template:', mode);
+            }
+        }
+
+        function closeResumeBuilder() {
+            const modal = document.getElementById('resumeBuilderModal');
+            modal.style.display = 'none';
+        }
+
+        function toggleSection(sectionName) {
+            const content = document.getElementById(sectionName + '-section');
+            const header = content.previousElementSibling;
+            const icon = header.querySelector('i');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(-90deg)';
+            } else {
+                // Close all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.section-header i').forEach(i => {
+                    i.style.transform = 'rotate(-90deg)';
+                });
+                
+                // Open selected section
+                content.classList.add('active');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function saveResume() {
+            alert('✅ Resume saved successfully!\n\nYour changes have been saved to your account.');
+        }
+
+        function downloadResumeAsPDF() {
+            alert('📄 Downloading resume as PDF...\n\nYour resume will be downloaded shortly.');
+        }
+
+        function viewResume() {
+            alert('👁️ Opening resume preview...\n\nYour resume will open in a new window.');
+        }
+
+        function downloadResume() {
+            alert('📥 Downloading resume...\n\nYour resume download will start shortly.');
+        }
+
+        function deleteResume() {
+            if (confirm('Are you sure you want to delete this resume?')) {
+                alert('🗑️ Resume deleted successfully!');
+            }
+        }
+
+        // Smooth navigation function
+        function navigateWithFade(href) {
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resumeBuilderModal');
+            if (event.target == modal) {
+                closeResumeBuilder();
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

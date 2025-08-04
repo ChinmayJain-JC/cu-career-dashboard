@@ -307,12 +307,47 @@
             padding: 18px;
             transition: all 0.3s;
             cursor: pointer;
+            position: relative;
         }
 
         .job-card:hover {
             background: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transform: translateY(-2px);
+        }
+
+        /* Deadline Badge */
+        .deadline-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .deadline-urgent {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+            animation: urgentPulse 2s infinite;
+        }
+
+        .deadline-soon {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+
+        .deadline-normal {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        @keyframes urgentPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
         }
 
         .job-header {
@@ -368,12 +403,41 @@
             margin-bottom: 12px;
             font-size: 12px;
             color: #6b7280;
+            flex-wrap: wrap;
         }
 
         .job-detail {
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        /* Highlighted Deadline */
+        .job-deadline {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        .deadline-urgent-text {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .deadline-soon-text {
+            background: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fed7aa;
+        }
+
+        .deadline-normal-text {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
         }
 
         .job-description {
@@ -472,6 +536,14 @@
             .filters {
                 flex-direction: column;
             }
+
+            .deadline-badge {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 10px;
+                align-self: flex-start;
+            }
         }
     </style>
 </head>
@@ -500,7 +572,7 @@
                     <i class="fas fa-chart-bar"></i>
                     Student Report
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" onclick="navigateWithFade('resume.html')" class="nav-item">
                     <i class="fas fa-file-alt"></i>
                     Resume
                 </a>
@@ -515,20 +587,16 @@
                 </a>
             </nav>
 
-            <!-- Quick Actions -->
+            <!-- Standardized Quick Actions -->
             <div class="quick-actions">
                 <h4>Quick Actions</h4>
-                <a href="#" class="action-item">
+                <a href="resume.html" class="action-item">
                     <i class="fas fa-upload"></i>
                     Upload Resume
                 </a>
-                <a href="#" class="action-item">
+                <a href="career.html" class="action-item">
                     <i class="fas fa-search"></i>
                     Find Jobs
-                </a>
-                <a href="#" class="action-item">
-                    <i class="fas fa-user-tie"></i>
-                    Mock Interview
                 </a>
             </div>
         </div>
@@ -624,238 +692,243 @@
                     Featured Opportunities
                 </div>
                 
-                <div class="jobs-grid">
-                    <div class="job-card" onclick="openJobDetails('software-engineer-google')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">G</div>
-                                <div>
-                                    <div class="job-title">Software Engineer</div>
-                                    <div class="company-name">Google</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Full-time</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Bangalore</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>2 days ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>50+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            We're looking for talented software engineers to join our team and work on cutting-edge projects that impact billions of users worldwide.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹12-18 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('software-engineer-google')">View Job Details</button>
-                        </div>
-                    </div>
-                    
-                    <div class="job-card" onclick="openJobDetails('data-scientist-microsoft')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">M</div>
-                                <div>
-                                    <div class="job-title">Data Scientist</div>
-                                    <div class="company-name">Microsoft</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Full-time</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Hyderabad</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1 week ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>30+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            Join our AI research team and work on machine learning models that power Microsoft's products and services.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹15-22 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('data-scientist-microsoft')">View Job Details</button>
-                        </div>
-                    </div>
-                    
-                    <div class="job-card" onclick="openJobDetails('product-manager-amazon')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">A</div>
-                                <div>
-                                    <div class="job-title">Product Manager</div>
-                                    <div class="company-name">Amazon</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Full-time</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Delhi</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>3 days ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>75+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            Drive product strategy and execution for one of Amazon's fastest-growing business segments.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹18-25 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('product-manager-amazon')">View Job Details</button>
-                        </div>
-                    </div>
-                    
-                    <div class="job-card" onclick="openJobDetails('ui-designer-figma')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">F</div>
-                                <div>
-                                    <div class="job-title">Senior UI Designer</div>
-                                    <div class="company-name">Figma</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Remote</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Remote</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>5 days ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>40+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            Design beautiful and intuitive user interfaces for our collaborative design platform used by millions.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹10-16 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('ui-designer-figma')">View Job Details</button>
-                        </div>
-                    </div>
-
-                    <div class="job-card" onclick="openJobDetails('marketing-manager-netflix')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">N</div>
-                                <div>
-                                    <div class="job-title">Marketing Manager</div>
-                                    <div class="company-name">Netflix</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Full-time</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Mumbai</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1 day ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>25+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            Lead marketing campaigns for original content and drive user acquisition across multiple channels.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹14-20 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('marketing-manager-netflix')">View Job Details</button>
-                        </div>
-                    </div>
-
-                    <div class="job-card" onclick="openJobDetails('business-analyst-mckinsey')">
-                        <div class="job-header">
-                            <div class="job-company">
-                                <div class="company-logo">Mc</div>
-                                <div>
-                                    <div class="job-title">Business Analyst</div>
-                                    <div class="company-name">McKinsey & Company</div>
-                                </div>
-                            </div>
-                            <div class="job-type">Full-time</div>
-                        </div>
-                        
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Delhi</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>4 days ago</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fas fa-users"></i>
-                                <span>100+ applicants</span>
-                            </div>
-                        </div>
-                        
-                        <div class="job-description">
-                            Work with Fortune 500 clients to solve complex business problems and drive strategic transformation.
-                        </div>
-                        
-                        <div class="job-footer">
-                            <div class="job-salary">₹20-28 LPA</div>
-                            <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('business-analyst-mckinsey')">View Job Details</button>
-                        </div>
-                    </div>
+                <div class="jobs-grid" id="jobsGrid">
+                    <!-- Jobs will be dynamically generated with deadlines -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Smooth page fade-in effect on load
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('loaded');
-        });
+        // Job data with deadlines
+        const jobsData = [
+            {
+                id: 'software-engineer-google',
+                title: 'Software Engineer',
+                company: 'Google',
+                logo: 'G',
+                location: 'Bangalore',
+                type: 'Full-time',
+                salary: '₹12-18 LPA',
+                applicants: '50+ applicants',
+                description: "We're looking for talented software engineers to join our team and work on cutting-edge projects that impact billions of users worldwide.",
+                deadline: '2025-08-04T15:30:00Z' // 4 Aug 2025, 3:30 PM
+            },
+            {
+                id: 'data-scientist-microsoft',
+                title: 'Data Scientist',
+                company: 'Microsoft',
+                logo: 'M',
+                location: 'Hyderabad',
+                type: 'Full-time',
+                salary: '₹15-22 LPA',
+                applicants: '30+ applicants',
+                description: "Join our AI research team and work on machine learning models that power Microsoft's products and services.",
+                deadline: '2025-08-03T23:59:00Z' // Today deadline - 8 hours left
+            },
+            {
+                id: 'product-manager-amazon',
+                title: 'Product Manager',
+                company: 'Amazon',
+                logo: 'A',
+                location: 'Delhi',
+                type: 'Full-time',
+                salary: '₹18-25 LPA',
+                applicants: '75+ applicants',
+                description: "Drive product strategy and execution for one of Amazon's fastest-growing business segments.",
+                deadline: '2025-08-05T18:00:00Z' // 5 Aug 2025, 6:00 PM
+            },
+            {
+                id: 'ui-designer-figma',
+                title: 'Senior UI Designer',
+                company: 'Figma',
+                logo: 'F',
+                location: 'Remote',
+                type: 'Remote',
+                salary: '₹10-16 LPA',
+                applicants: '40+ applicants',
+                description: "Design beautiful and intuitive user interfaces for our collaborative design platform used by millions.",
+                deadline: '2025-08-03T20:00:00Z' // Today deadline - 5 hours left
+            },
+            {
+                id: 'marketing-manager-netflix',
+                title: 'Marketing Manager',
+                company: 'Netflix',
+                logo: 'N',
+                location: 'Mumbai',
+                type: 'Full-time',
+                salary: '₹14-20 LPA',
+                applicants: '25+ applicants',
+                description: "Lead marketing campaigns for original content and drive user acquisition across multiple channels.",
+                deadline: '2025-08-07T12:00:00Z' // 7 Aug 2025, 12:00 PM
+            },
+            {
+                id: 'business-analyst-mckinsey',
+                title: 'Business Analyst',
+                company: 'McKinsey & Company',
+                logo: 'Mc',
+                location: 'Delhi',
+                type: 'Full-time',
+                salary: '₹20-28 LPA',
+                applicants: '100+ applicants',
+                description: "Work with Fortune 500 clients to solve complex business problems and drive strategic transformation.",
+                deadline: '2025-08-10T17:30:00Z' // 10 Aug 2025, 5:30 PM
+            }
+        ];
+
+        // Function to calculate deadline status and text
+        function getDeadlineInfo(deadlineString) {
+            const deadline = new Date(deadlineString);
+            const now = new Date();
+            const diffTime = deadline.getTime() - now.getTime();
+            const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let status, text, badgeClass, textClass;
+
+            if (diffTime < 0) {
+                // Deadline passed
+                status = 'expired';
+                text = 'Deadline Passed';
+                badgeClass = 'deadline-urgent';
+                textClass = 'deadline-urgent-text';
+            } else if (diffHours <= 24) {
+                // Less than 24 hours - show hours
+                status = 'urgent';
+                if (diffHours <= 1) {
+                    text = `${Math.max(1, Math.ceil(diffTime / (1000 * 60)))} mins left`;
+                } else {
+                    text = `${diffHours} hrs left`;
+                }
+                badgeClass = 'deadline-urgent';
+                textClass = 'deadline-urgent-text';
+            } else if (diffDays <= 3) {
+                // 1-3 days
+                status = 'soon';
+                text = `Apply by ${deadline.toLocaleDateString('en-IN', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })}`;
+                badgeClass = 'deadline-soon';
+                textClass = 'deadline-soon-text';
+            } else {
+                // More than 3 days
+                status = 'normal';
+                text = `Apply by ${deadline.toLocaleDateString('en-IN', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })}`;
+                badgeClass = 'deadline-normal';
+                textClass = 'deadline-normal-text';
+            }
+
+            return { status, text, badgeClass, textClass };
+        }
+
+        // Function to render jobs with deadlines
+        function renderJobs() {
+            const jobsGrid = document.getElementById('jobsGrid');
+            jobsGrid.innerHTML = '';
+
+            // Sort jobs by deadline (most urgent first)
+            const sortedJobs = jobsData.sort((a, b) => {
+                const deadlineA = new Date(a.deadline);
+                const deadlineB = new Date(b.deadline);
+                return deadlineA.getTime() - deadlineB.getTime();
+            });
+
+            sortedJobs.forEach(job => {
+                const deadlineInfo = getDeadlineInfo(job.deadline);
+                
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.onclick = () => openJobDetails(job.id);
+
+                jobCard.innerHTML = `
+                    <div class="deadline-badge ${deadlineInfo.badgeClass}">
+                        ${deadlineInfo.status === 'urgent' ? '🔥 URGENT' : 
+                          deadlineInfo.status === 'soon' ? '⏰ SOON' : '📅 APPLY'}
+                    </div>
+                    
+                    <div class="job-header">
+                        <div class="job-company">
+                            <div class="company-logo">${job.logo}</div>
+                            <div>
+                                <div class="job-title">${job.title}</div>
+                                <div class="company-name">${job.company}</div>
+                            </div>
+                        </div>
+                        <div class="job-type">${job.type}</div>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="job-detail">
+                            <i class="fas fa-users"></i>
+                            <span>${job.applicants}</span>
+                        </div>
+                        <div class="job-deadline ${deadlineInfo.textClass}">
+                            <i class="fas ${deadlineInfo.status === 'urgent' ? 'fa-clock' : deadlineInfo.status === 'soon' ? 'fa-exclamation-triangle' : 'fa-calendar-alt'}"></i>
+                            <span>${deadlineInfo.text}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-description">
+                        ${job.description}
+                    </div>
+                    
+                    <div class="job-footer">
+                        <div class="job-salary">${job.salary}</div>
+                        <button class="view-details-btn" onclick="event.stopPropagation(); openJobDetails('${job.id}')">
+                            View Job Details
+                        </button>
+                    </div>
+                `;
+
+                jobsGrid.appendChild(jobCard);
+            });
+        }
+
+        // Function to update deadlines in real-time
+        function updateDeadlines() {
+            const jobCards = document.querySelectorAll('.job-card');
+            
+            jobCards.forEach((card, index) => {
+                const job = jobsData[index];
+                const deadlineInfo = getDeadlineInfo(job.deadline);
+                
+                // Update badge
+                const badge = card.querySelector('.deadline-badge');
+                badge.className = `deadline-badge ${deadlineInfo.badgeClass}`;
+                badge.innerHTML = deadlineInfo.status === 'urgent' ? '🔥 URGENT' : 
+                                 deadlineInfo.status === 'soon' ? '⏰ SOON' : '📅 APPLY';
+                
+                // Update deadline text
+                const deadlineElement = card.querySelector('.job-deadline');
+                deadlineElement.className = `job-deadline ${deadlineInfo.textClass}`;
+                deadlineElement.innerHTML = `
+                    <i class="fas ${deadlineInfo.status === 'urgent' ? 'fa-clock' : deadlineInfo.status === 'soon' ? 'fa-exclamation-triangle' : 'fa-calendar-alt'}"></i>
+                    <span>${deadlineInfo.text}</span>
+                `;
+            });
+        }
+
+        // Open job details page
+        function openJobDetails(jobId) {
+            sessionStorage.setItem('selectedJobId', jobId);
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = 'job-details.html';
+            }, 300);
+        }
 
         // Smooth navigation function
         function navigateWithFade(href) {
@@ -865,23 +938,22 @@
             }, 300);
         }
 
-        // Open job details page
-        function openJobDetails(jobId) {
-            // Store job ID in sessionStorage for the details page
-            sessionStorage.setItem('selectedJobId', jobId);
-            
-            // Navigate to job details page with fade effect
-            document.body.classList.remove('loaded');
-            setTimeout(() => {
-                window.location.href = 'job-details.html';
-            }, 300);
-        }
-
         // Search functionality
-        document.querySelector('.search-btn').addEventListener('click', function() {
-            const query = document.querySelector('.search-input').value;
-            console.log(`Searching for: ${query}`);
-            // Implementation would perform search and update results
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+            renderJobs();
+            
+            // Update deadlines every minute
+            setInterval(updateDeadlines, 60000);
+            
+            // Search functionality
+            const searchBtn = document.querySelector('.search-btn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function() {
+                    const query = document.querySelector('.search-input').value;
+                    console.log(`Searching for: ${query}`);
+                });
+            }
         });
     </script>
 </body>

@@ -141,6 +141,46 @@
             100% { transform: scale(1); }
         }
 
+        /* Standardized Quick Actions */
+        .quick-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .quick-actions h4 {
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .action-item i {
+            width: 16px;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .action-item:hover {
+            background: #f8fafc;
+            color: #ff6b35;
+            padding-left: 8px;
+        }
+
         /* Back to Dashboard Button */
         .back-to-dashboard {
             position: fixed;
@@ -383,14 +423,14 @@
             margin-top: 2px;
         }
 
-        .action-item {
+        .insight-action-item {
             background: rgba(255, 107, 53, 0.12);
             border-left: 3px solid #ff6b35;
             border-radius: 8px;
             padding: 8px;
         }
 
-        .action-item strong {
+        .insight-action-item strong {
             color: #1f2937;
         }
 
@@ -441,16 +481,47 @@
                     <div class="logo-subtext">Career Platform</div>
                 </div>
             </div>
+            
             <nav>
-                <a class="nav-item" href="#" onclick="navigateWithFade('index.html')"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                <a class="nav-item" href="#" onclick="navigateWithFade('career.html')"><i class="fas fa-briefcase"></i>Career</a>
-                <a class="nav-item active" href="student-report.html"><i class="fas fa-chart-bar"></i>Student Report</a>
-                <a class="nav-item" href="#"><i class="fas fa-file-alt"></i>Resume</a>
-                <a class="nav-item" href="#"><i class="fas fa-paper-plane"></i>Applications</a>
-                <a class="nav-item notifications" href="#"><i class="fas fa-bell"></i>Notifications
+                <a class="nav-item" href="#" onclick="navigateWithFade('index.html')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a class="nav-item" href="#" onclick="navigateWithFade('career.html')">
+                    <i class="fas fa-briefcase"></i>
+                    Career
+                </a>
+                <a class="nav-item active" href="student-report.html">
+                    <i class="fas fa-chart-bar"></i>
+                    Student Report
+                </a>
+                <a class="nav-item" href="#" onclick="navigateWithFade('resume.html')">
+                    <i class="fas fa-file-alt"></i>
+                    Resume
+                </a>
+                <a class="nav-item" href="#">
+                    <i class="fas fa-paper-plane"></i>
+                    Applications
+                </a>
+                <a class="nav-item notifications" href="#">
+                    <i class="fas fa-bell"></i>
+                    Notifications
                     <div class="notification-badge">5</div>
                 </a>
             </nav>
+
+            <!-- Standardized Quick Actions -->
+            <div class="quick-actions">
+                <h4>Quick Actions</h4>
+                <a href="resume.html" class="action-item">
+                    <i class="fas fa-upload"></i>
+                    Upload Resume
+                </a>
+                <a href="career.html" class="action-item">
+                    <i class="fas fa-search"></i>
+                    Find Jobs
+                </a>
+            </div>
         </aside>
 
         <!-- Main -->
@@ -549,10 +620,10 @@
                 <!-- Actions -->
                 <div class="insights-card">
                     <h3 class="section-title"><i class="fas fa-rocket"></i>Action Items</h3>
-                    <div class="insight-item action-item"><i class="fas fa-code"></i><strong>Technical Skills:</strong>&nbsp;Daily DSA practice</div>
-                    <div class="insight-item action-item"><i class="fas fa-comments"></i><strong>Interview Prep:</strong>&nbsp;Mock interviews</div>
-                    <div class="insight-item action-item"><i class="fas fa-users"></i><strong>Leverage GD:</strong>&nbsp;Keep up GD strength</div>
-                    <div class="insight-item action-item"><i class="fas fa-bullseye"></i><strong>Target Apps:</strong>&nbsp;More tech-heavy firms</div>
+                    <div class="insight-item insight-action-item"><i class="fas fa-code"></i><strong>Technical Skills:</strong>&nbsp;Daily DSA practice</div>
+                    <div class="insight-item insight-action-item"><i class="fas fa-comments"></i><strong>Interview Prep:</strong>&nbsp;Mock interviews</div>
+                    <div class="insight-item insight-action-item"><i class="fas fa-users"></i><strong>Leverage GD:</strong>&nbsp;Keep up GD strength</div>
+                    <div class="insight-item insight-action-item"><i class="fas fa-bullseye"></i><strong>Target Apps:</strong>&nbsp;More tech-heavy firms</div>
                 </div>
             </section>
         </main>
